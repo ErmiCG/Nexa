@@ -28,8 +28,7 @@ and view financial reports in a clean, tech-style dashboard.
    - Run the provided SQL schema file
    - Update database credentials in config.py
 5. Run application:
-```bash
-python backend/app.py or python -m backend.app
+bash --- python backend/app.py or python -m backend.app on cmd or terminal
 6. Open in browser:
 - http://127.0.0.1:5000
 # Demo Account
@@ -44,3 +43,6 @@ python backend/app.py or python -m backend.app
 - All data is user-specific and securely stored
 - Charts and progress bars update dynamically based on user data
 - Designed for learning, academic projects, and portfolio use
+
+
+
