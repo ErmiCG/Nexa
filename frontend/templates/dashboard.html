@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - Nexa</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <h2 class="sidebar-logo">Nexa</h2>
+    <a href="{{ url_for('dashboard_bp.dashboard') }}" class="active">Dashboard</a>
+    <a href="{{ url_for('transaction_bp.expenses') }}">Expenses</a>
+    <a href="{{ url_for('budget_bp.budget') }}">Budget</a>
+    <a href="{{ url_for('goal_bp.goals') }}">Goals</a>
+    <a href="{{ url_for('reports_bp.reports') }}">Reports</a>
+    <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+    
+
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <button class="menu-btn" onclick="toggleSidebar()" id="menuBtn">☰</button>
+    <div class="content-box">
+    <div class="page-container">
+    <h2 class="page-title">Welcome, {{ session['username'] }}</h2>
+
+    <!-- Metrics Cards -->
+    <div class="cards">
+        <div class="card">
+            <h3>Today's Expense</h3>
+            <p>{{ today_expense }} ETB</p>
+        </div>
+        <div class="card">
+            <h3>Monthly Income</h3>
+            <p>{{ monthly_income }} ETB</p>
+        </div>
+        <div class="card">
+            <h3>Budget Used</h3>
+            <p>{{ budget_used }}%</p>
+        </div>
+        <div class="card">
+            <h3>Saving Progress</h3>
+            <p>{{ saving_progress }} ETB</p>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="dashboard-buttons">
+        <a href="{{ url_for('transaction_bp.expenses') }}" class="btn">Add Expense</a>
+        <a href="{{ url_for('budget_bp.budget') }}" class="btn">Set Budget</a>
+        <a href="{{ url_for('reports_bp.reports') }}" class="btn">View Reports</a>
+    </div>
+</div>
+</div>
+   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reports - Nexa</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+    <h2 class="sidebar-logo">Nexa</h2>
+    <a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('transaction_bp.expenses') }}">Expenses</a>
+    <a href="{{ url_for('budget_bp.budget') }}">Budget</a>
+    <a href="{{ url_for('goal_bp.goals') }}">Goals</a>
+    <a href="{{ url_for('reports_bp.reports') }}">Reports</a>
+    <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+    
+
+</div>
+
+<div class="main">
+  <button class="menu-btn" onclick="toggleSidebar()" id="menuBtn">☰</button>
+  <div class="content-box">
+  <div class="page-container">
+    <h2 class="page-title">Reports</h2>
+   <div class="charts reports-charts">
+    <div class="chart-box">
+        <canvas id="expensePieChart"></canvas>
+    </div>
+    <div class="chart-box">
+        <canvas id="incomeExpenseBarChart"></canvas>
+    </div>
+</div>
+
+    <h3>Monthly Summary</h3>
+    <div class="table-wrapper">
+    <table class="summary-table">
+        <tr><th>Total Income</th><td>{{ monthly_income }} ETB</td></tr>
+        <tr><th>Total Expense</th><td>{{ today_expense }} ETB</td></tr>
+        <tr><th>Savings</th><td>{{ saving_progress }} ETB</td></tr>
+    </table>
+</div>
+</div>
+<script>
+    const monthlyIncome = {{ monthly_income | tojson }};
+    const todayExpense = {{ today_expense | tojson }};
+    const savingProgress = {{ saving_progress | tojson }};
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // BAR CHART (Income vs Expense)
+    const barCtx = document.getElementById("incomeExpenseBarChart");
+    if (barCtx) {
+        new Chart(barCtx, {
+            type: "bar",
+            data: {
+                labels: ["Income", "Expense"],
+                datasets: [{
+                    data: [monthlyIncome, todayExpense]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    // PIE CHART (Savings)
+    const pieCtx = document.getElementById("expensePieChart");
+    if (pieCtx) {
+        new Chart(pieCtx, {
+            type: "pie",
+            data: {
+                labels: ["Saved", "Remaining"],
+                datasets: [{
+                    data: [savingProgress, Math.max(0, monthlyIncome - todayExpense)]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+});
+</script>
+
+</div>
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

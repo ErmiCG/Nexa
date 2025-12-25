@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Goals - Nexa</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+    <h2 class="sidebar-logo">Nexa</h2>
+    <a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('transaction_bp.expenses') }}">Expenses</a>
+    <a href="{{ url_for('budget_bp.budget') }}">Budget</a>
+    <a href="{{ url_for('goal_bp.goals') }}" class="active">Goals</a>
+    <a href="{{ url_for('reports_bp.reports') }}">Reports</a>
+    <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+</div>
+
+<div class="main">
+    <button class="menu-btn" onclick="toggleSidebar()" id="menuBtn">☰</button>
+    <div class="content-box">
+    <div class="page-container">
+    <h2 class="page-title">Create Goal</h2>
+    <form method="POST" class="goal-form">
+        <input type="text" name="name" placeholder="Goal Name" required>
+        <input type="number" step="0.01" name="target" placeholder="Target Amount" required>
+        <button type="submit">Create Goal</button>
+    </form>
+    <h3 class="page-title">Add Savings</h3>
+    <form method="POST" action="/goals/save">
+        <select name="goal_id" required>
+            {% for g in goals %}
+            <option value="{{ g[3] }}">{{ g[0] }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" step="0.01" name="amount" placeholder="Amount Saved" required>
+        <button type="submit">Add Saving</button>
+    </form>
+
+
+    <h3>Active Goals</h3>
+    <div class="table-wrapper">
+    <table class="goals-table">
+        <tr><th>Goal Name</th><th>Target</th><th>Progress</th></tr>
+        {% for g in goals %}
+        <tr>
+            <td>{{ g[0] }}</td>
+            <td>{{ g[1] }}</td>
+            <td>
+            <div class="progress-container">
+            <div class="progress-track">
+                <div class="progress-fill" style="width: {{ budget_used }}%;"></div>
+            </div>
+            <div class="progress-label">{{ budget_used }}%</div>
+        </div>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</div>
+</div>
+</div>
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

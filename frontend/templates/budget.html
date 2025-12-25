@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Budget - Nexa</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+    <h2 class="sidebar-logo">Nexa</h2>
+    <a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('transaction_bp.expenses') }}">Expenses</a>
+    <a href="{{ url_for('budget_bp.budget') }}" class="active">Budget</a>
+    <a href="{{ url_for('goal_bp.goals') }}">Goals</a>
+    <a href="{{ url_for('reports_bp.reports') }}">Reports</a>
+    <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+    
+</div>
+
+<div class="main">
+    <button class="menu-btn" onclick="toggleSidebar()" id="menuBtn">☰</button>
+   <div class="content-box">
+    <div class="page-container">
+
+    <h2 class="page-title">Set Budget</h2>
+
+    <form method="POST" class="budget-form">
+        <select name="month" required>
+            <option value="">Select Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+        <input type="number" step="0.01" name="amount" placeholder="Budget Amount" required>
+        <button type="submit">Set Budget</button>
+    </form>
+
+    <div class="budget-status">
+       <h3>Budget Status</h3>
+<div class="table-wrapper">
+<table>
+    <tr><th>Total Budget</th><td>{{ total_budget }} ETB</td></tr>
+    <tr><th>Spent</th><td>{{ spent }} ETB</td></tr>
+    <tr><th>Remaining</th><td>{{ remaining }} ETB</td></tr>
+</table>
+</div>
+    <h3>Progress
+      <div class="progress-container">
+    <div class="progress-track">
+        <div class="progress-fill" style="width: {{ progress }}%; background-color: #4a90e2;"></div>
+    </div>
+    <div class="progress-label">{{ progress }}%</div>
+</div>
+
+
+    </div>
+    </div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
